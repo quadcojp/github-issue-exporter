@@ -8,16 +8,10 @@ import pandas as pd
 def main():
     dotenv_path = join(dirname(__file__), '.env')
     load_dotenv(dotenv_path)
-
-    # repos = ['mc-map-app', 'mc-map-backend', 'mc-map-batch',
-    #          'mcportal-app-ph2', 'mcportal-webapp-ph2', 'mcportal-backend-ph2', 'mcportal-batch',
-    #          'yrb-app', 'yrb_admin-api', 'yrb-batch']
     repos = os.environ.get("REPOS").split(',')
-
     g = Github(os.environ.get("TOKEN"))
 
     issue_list = []
-
     for repo in repos:
         for issue in g.get_organization(os.environ.get("ORG")).get_repo(repo).get_issues(state="all"):
             if '/pull/' in issue.html_url:
